@@ -1,5 +1,5 @@
 <Window x:Class="SJHotkeys.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SJ Hotkeys" Icon="pack://application:,,,/Assets/sj-hotkeys-icon.png" Width="560" Height="700" WindowStartupLocation="CenterScreen" Background="{StaticResource Bg}" Foreground="{StaticResource Text}" FontFamily="Segoe UI Variable Text, Segoe UI" FontSize="13" ResizeMode="NoResize" UseLayoutRounding="True" SnapsToDevicePixels="True">
+        Title="SJ Hotkeys" Icon="pack://application:,,,/Assets/sj-hotkeys-icon.png" Width="560" Height="700" WindowStartupLocation="CenterScreen" Background="{StaticResource Bg}" Foreground="{StaticResource Text}" FontFamily="Segoe UI Variable Text, Segoe UI" FontSize="13" ResizeMode="CanMinimize" UseLayoutRounding="True" SnapsToDevicePixels="True">
   <Window.Resources>
     <DataTemplate x:Key="HotkeyTemplate">
       <Border Background="{StaticResource Panel}" CornerRadius="13" Padding="16" Margin="0,0,2,0">
