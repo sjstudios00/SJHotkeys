@@ -10,7 +10,7 @@
     <ApplicationIcon>Assets\sj-hotkeys.ico</ApplicationIcon>
     <AssemblyName>SJ Hotkeys</AssemblyName>
     <RootNamespace>SJHotkeys</RootNamespace>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Authors>SJ Studios</Authors>
     <Company>SJ Studios</Company>
     <Product>SJ Hotkeys</Product>

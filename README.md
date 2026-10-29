@@ -23,10 +23,6 @@
 
 Mit SJ Hotkeys öffnest du deine meistgenutzten Programme im Handumdrehen. Wähle eine ausführbare Datei aus, nimm eine Tastenkombination auf und starte das Programm von überall in Windows – auch wenn ein anderes Fenster im Vordergrund ist.
 
-![Echter Windows-Screenshot von SJ Hotkeys mit leerer Hotkey-Liste](docs/images/main-window-clean.png)
-
-*Eine echte Aufnahme des SJ-Hotkeys-Fensters, auf die App zugeschnitten. Desktop und andere Apps sind nicht zu sehen.*
-
 ### Warum SJ Hotkeys?
 
 - **Schnell eingerichtet:** Wähle eine `.exe`-Datei aus, drücke deine Tastenkombination und speichere sie.
@@ -35,37 +31,26 @@ Mit SJ Hotkeys öffnest du deine meistgenutzten Programme im Handumdrehen. Wähl
 - **Lokal und privat:** Tastenkombinationen und Einstellungen bleiben auf deinem PC. SJ Hotkeys benötigt kein Konto und verwendet weder Analyse noch Telemetrie.
 - **Übersichtliche Oberfläche:** Kompaktes dunkles Design, gut erkennbare Tastenkombinationen und gekürzt angezeigte Programmpfade.
 
-## Screenshots für Windows
-
-Beide Bilder sind echte Aufnahmen von SJ Hotkeys unter Windows und auf die jeweiligen App-Fenster zugeschnitten. Desktop und andere Apps sind nicht zu sehen. Die Einstellungsansicht zeigt das offizielle SJ Studios Logo.
-
-| Hotkey-Fenster | Über & Einstellungen |
-| --- | --- |
-| ![SJ-Hotkeys-Hauptfenster unter Windows mit leerer Hotkey-Liste](docs/images/main-window-clean.png) | ![SJ-Hotkeys-Fenster Über und Einstellungen unter Windows mit dem SJ Studios Logo](docs/images/settings-clean.png) |
-
 ## Herunterladen und installieren
 
-### Option 1: Windows-Version herunterladen
+### Empfohlen: Installationsprogramm
 
-1. Öffne [Releases](https://github.com/sjstudios00/SJHotkeys/releases).
-2. Wähle den passenden Download:
-   - **Portable:** Läuft ohne separat installierte .NET-Runtime. Beim ersten Start kann die Initialisierung der mitgelieferten Runtime etwas länger dauern.
-   - **Lightweight:** Deutlich kleinerer Download; benötigt die **.NET 9 Desktop Runtime (x64)**.
-3. Starte die EXE-Datei. Eine Installation oder ein Benutzerkonto ist nicht erforderlich.
+1. Öffne die [GitHub-Releases](https://github.com/sjstudios00/SJHotkeys/releases) und lade `SJ-Hotkeys-Setup-v1.2.0-win-x64.exe` herunter.
+2. Starte das Setup und folge dem Assistenten. Es installiert SJ Hotkeys nur für deinen Windows-Benutzer, benötigt keine Adminrechte und enthält die .NET-Runtime.
+3. Öffne SJ Hotkeys über das Startmenü. Die Deinstallation ist jederzeit über **Installierte Apps** in den Windows-Einstellungen möglich.
 
-Die Lightweight-Version liegt im Repository unter [`release/SJ-Hotkeys-v1.1.0-win-x64-lightweight.exe`](release/SJ-Hotkeys-v1.1.0-win-x64-lightweight.exe). Die eigenständige Portable-Version findest du als Download im [Release v1.1.0](https://github.com/sjstudios00/SJHotkeys/releases/tag/v1.1.0).
+Das Setup bietet optional eine Desktop-Verknüpfung an. Hotkeys und Einstellungen bleiben bei einer Deinstallation in deinem Benutzerprofil erhalten.
 
 > Windows zeigt bei einer unsignierten App aus dem Internet möglicherweise einen SmartScreen-Hinweis. Führe nur Software aus, der du vertraust und die du aus dem offiziellen SJ-Hotkeys-Repository heruntergeladen hast.
 
-### Installationsprogramm erstellen
+### Portable oder Lightweight-Version
 
-Das Inno-Setup-Projekt erstellt ein normales Windows-Installationsprogramm für den aktuellen Benutzer. Es legt SJ Hotkeys im Startmenü ab, bietet optional eine Desktop-Verknüpfung an und enthält die .NET-Runtime. Für die Installation sind keine Administratorrechte nötig. Das Installationsprogramm lässt sich mit dem .NET 9 SDK und [Inno Setup 7](https://jrsoftware.org/isdl.php) erzeugen:
+Wenn du keine Installation möchtest, kannst du in den [Releases](https://github.com/sjstudios00/SJHotkeys/releases) stattdessen eine dieser Dateien herunterladen:
 
-```powershell
-.\scripts\build-installer.ps1
-```
+- **Portable:** Eigenständige Datei mit .NET-Runtime; benötigt keine weitere Runtime-Installation.
+- **Lightweight:** Kleinerer Download; benötigt die **.NET 9 Desktop Runtime (x64)**.
 
-Die Setup-Datei wird unter `artifacts\installer\SJ-Hotkeys-Setup-v1.1.0-win-x64.exe` erstellt. Die App kann über den Windows-Eintrag **SJ Hotkeys** deinstalliert werden; Hotkeys und Einstellungen unter deinem Benutzerprofil bleiben dabei erhalten.
+Beide Varianten lassen sich direkt starten und benötigen keine Installation.
 
 ### Option 2: Aus dem Quellcode erstellen
 
@@ -93,7 +78,7 @@ dotnet publish .\SJHotkeys.csproj -c Release -r win-x64 `
   -o .\publish\portable
 ```
 
-Mit dem Skript [`scripts/publish-release.ps1`](scripts/publish-release.ps1) erstellst du die Release-Dateien für v1.1.0 sowie eine SHA-256-Prüfsummendatei.
+Mit [`scripts/publish-release.ps1`](scripts/publish-release.ps1) erstellst du Setup, Portable und Lightweight sowie eine SHA-256-Prüfsummendatei. Für den Setup-Build wird zusätzlich [Inno Setup 7](https://jrsoftware.org/isdl.php) benötigt.
 
 ## Deine erste Tastenkombination
 
