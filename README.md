@@ -88,8 +88,8 @@ Mit dem Skript [`scripts/publish-release.ps1`](scripts/publish-release.ps1) erst
 ## Deine erste Tastenkombination
 
 1. Öffne **SJ Hotkeys** und wähle **Add Hotkey**.
-2. Wähle über **Browse** die `.exe`-Datei des Programms aus.
-3. Klicke auf das Tastenkombinationsfeld und drücke eine Kombination, zum Beispiel `Ctrl + Alt + N`.
+2. Wähle über **Browse** eine `.exe`-Datei aus oder ziehe eine Programmdatei (`.exe`) beziehungsweise Windows-Verknüpfung (`.lnk`) direkt in das SJ-Hotkeys-Fenster.
+3. Der Dialog öffnet sich mit vorausgewähltem Programm. Drücke die gewünschte Kombination, zum Beispiel `Ctrl + Alt + N`.
 4. Wähle **Save Hotkey**.
 5. Drücke die Kombination in einer beliebigen App, um das Programm zu starten.
 

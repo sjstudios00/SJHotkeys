@@ -126,14 +126,14 @@ public partial class MainWindow : Window
 
     private void AddHotkey_Click(object sender, RoutedEventArgs e) => EditHotkey(null);
     private void EditHotkey_Click(object sender, RoutedEventArgs e) => EditHotkey((sender as System.Windows.Controls.Button)?.Tag as HotkeyEntry);
-    private void EditHotkey(HotkeyEntry? old)
+    private bool EditHotkey(HotkeyEntry? old, string? initialProgramPath = null)
     {
-        var dialog = new HotkeyDialog(old) { Owner = this };
-        if (dialog.ShowDialog() != true) return;
+        var dialog = new HotkeyDialog(old, initialProgramPath) { Owner = this };
+        if (dialog.ShowDialog() != true) return false;
         if (_settings.Hotkeys.Any(x => x.Id != old?.Id && x.Modifiers == dialog.Modifiers && x.VirtualKey == dialog.VirtualKey))
         {
             MessageBox.Show(this, "This shortcut is already assigned in SJ Hotkeys.", "Shortcut already used", MessageBoxButton.OK, MessageBoxImage.Information);
-            return;
+            return false;
         }
         var updated = new HotkeyEntry { Id = old?.Id ?? Guid.NewGuid(), ProgramPath = dialog.ProgramPath, Modifiers = dialog.Modifiers, VirtualKey = dialog.VirtualKey };
         if (old is not null) _hotkeys.Unregister(old);
@@ -141,7 +141,7 @@ public partial class MainWindow : Window
         {
             if (old is not null) _hotkeys.Register(old, out _);
             MessageBox.Show(this, error, "Shortcut unavailable", MessageBoxButton.OK, MessageBoxImage.Warning);
-            return;
+            return false;
         }
         if (old is not null) _settings.Hotkeys.Remove(old);
         _settings.Hotkeys.Add(updated);
@@ -149,6 +149,50 @@ public partial class MainWindow : Window
         HotkeyList.ItemsSource = null;
         HotkeyList.ItemsSource = _settings.Hotkeys;
         RefreshState();
+        return true;
+    }
+
+    private void MainWindow_DragEnter(object sender, System.Windows.DragEventArgs e) => UpdateDropFeedback(e);
+    private void MainWindow_DragOver(object sender, System.Windows.DragEventArgs e) => UpdateDropFeedback(e);
+
+    private void MainWindow_DragLeave(object sender, System.Windows.DragEventArgs e)
+    {
+        DropOverlay.Visibility = Visibility.Collapsed;
+        e.Handled = true;
+    }
+
+    private void UpdateDropFeedback(System.Windows.DragEventArgs e)
+    {
+        var paths = GetSupportedDropPaths(e);
+        var canDrop = paths.Length > 0;
+        DropOverlay.Visibility = canDrop ? Visibility.Visible : Visibility.Collapsed;
+        e.Effects = canDrop ? System.Windows.DragDropEffects.Copy : System.Windows.DragDropEffects.None;
+        e.Handled = true;
+    }
+
+    private void MainWindow_Drop(object sender, System.Windows.DragEventArgs e)
+    {
+        DropOverlay.Visibility = Visibility.Collapsed;
+        e.Handled = true;
+        var paths = GetSupportedDropPaths(e);
+        if (paths.Length == 0)
+        {
+            if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
+                MessageBox.Show(this, "Drop an .exe program or a Windows .lnk shortcut.", "Unsupported file", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+
+        foreach (var path in paths)
+        {
+            if (!EditHotkey(null, path)) break;
+        }
+    }
+
+    private static string[] GetSupportedDropPaths(System.Windows.DragEventArgs e)
+    {
+        if (!e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop) || e.Data.GetData(System.Windows.DataFormats.FileDrop) is not string[] paths)
+            return [];
+        return paths.Where(path => File.Exists(path) && (Path.GetExtension(path).Equals(".exe", StringComparison.OrdinalIgnoreCase) || Path.GetExtension(path).Equals(".lnk", StringComparison.OrdinalIgnoreCase))).ToArray();
     }
 
     private void DeleteHotkey_Click(object sender, RoutedEventArgs e)

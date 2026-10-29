@@ -12,7 +12,7 @@ public partial class HotkeyDialog : Window
     public string ProgramPath => ProgramPathBox.Text.Trim();
     public uint VirtualKey { get; private set; }
     public uint Modifiers { get; private set; }
-    public HotkeyDialog(HotkeyEntry? existing = null)
+    public HotkeyDialog(HotkeyEntry? existing = null, string? initialProgramPath = null)
     {
         InitializeComponent();
         if (existing is not null)
@@ -24,6 +24,11 @@ public partial class HotkeyDialog : Window
             VirtualKey = existing.VirtualKey;
             Modifiers = existing.Modifiers;
             ShortcutBox.Text = ShortcutFormatter.Format(Modifiers, VirtualKey);
+        }
+        else if (!string.IsNullOrWhiteSpace(initialProgramPath))
+        {
+            ProgramPathBox.Text = initialProgramPath;
+            Loaded += (_, _) => ShortcutBox.Focus();
         }
     }
     public Guid? EditingId => _editingId;
