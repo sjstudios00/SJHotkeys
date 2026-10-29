@@ -72,7 +72,9 @@ public partial class SettingsDialog : Window
             if (update is null)
             {
                 var current = Assembly.GetEntryAssembly()?.GetName().Version;
-                UpdateStatusText.Text = $"You're up to date ({current?.Major}.{current?.Minor}.{current?.Build}).";
+                UpdateStatusText.Text = _updates.LatestReleaseExists
+                    ? $"You're up to date ({current?.Major}.{current?.Minor}.{current?.Build})."
+                    : "No public release is available yet.";
                 return;
             }
             var result = MessageBox.Show(this, $"SJ Hotkeys {update.Value.Tag} is available. Download and install it now?\n\nThe update will be verified before installation.", "Update available", MessageBoxButton.YesNo, MessageBoxImage.Information);
@@ -84,6 +86,11 @@ public partial class SettingsDialog : Window
             UpdateStatusText.Text = "Downloading and verifying update…";
             var downloaded = await _updates.DownloadAndVerifyAsync(update.Value.AssetUrl, update.Value.AssetName);
             UpdateService.StartInstaller(downloaded);
+        }
+        catch (System.Net.Http.HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            UpdateStatusText.Text = "No public release is available yet.";
+            UpdateStatusText.Visibility = Visibility.Visible;
         }
         catch (Exception ex)
         {

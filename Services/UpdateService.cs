@@ -11,12 +11,15 @@ public sealed class UpdateService
 {
     private const string LatestReleaseApi = "https://api.github.com/repos/sjstudios00/SJHotkeys/releases/latest";
     private static readonly HttpClient Client = CreateClient();
+    public bool LatestReleaseExists { get; private set; }
 
     public async Task<(Version Version, string Tag, string AssetUrl, string AssetName)?> CheckAsync(CancellationToken cancellationToken = default)
     {
+        LatestReleaseExists = false;
         using var response = await Client.GetAsync(LatestReleaseApi, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
         if (response.StatusCode == System.Net.HttpStatusCode.NotFound) return null;
         response.EnsureSuccessStatusCode();
+        LatestReleaseExists = true;
         using var document = JsonDocument.Parse(await response.Content.ReadAsStreamAsync(cancellationToken));
         var root = document.RootElement;
         var tag = root.GetProperty("tag_name").GetString() ?? "";

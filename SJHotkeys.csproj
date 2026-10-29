@@ -28,5 +28,6 @@
   <ItemGroup>
     <Resource Include="Assets\sj-studios-logo-cropped.png" />
     <Resource Include="Assets\sj-hotkeys.ico" />
+    <Resource Include="Assets\sj-hotkeys-icon.png" />
   </ItemGroup>
 </Project>
