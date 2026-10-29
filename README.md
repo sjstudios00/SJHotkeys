@@ -23,7 +23,7 @@
 
 SJ Hotkeys makes it easy to open the programs you use most. Choose an executable, record a key combination, and launch that program from anywhere in Windows—even while another app is in front.
 
-![Real Windows screenshot of SJ Hotkeys showing its clean empty hotkey list](docs/images/main-window.png)
+![Real Windows screenshot of SJ Hotkeys showing its clean empty hotkey list](docs/images/main-window-clean.png)
 
 *A genuine capture of the SJ Hotkeys window, cropped to the app itself. No desktop or other apps are shown.*
 
@@ -41,7 +41,7 @@ Both images below are genuine captures of SJ Hotkeys on Windows, cropped to the 
 
 | Hotkey window | About & Settings |
 | --- | --- |
-| ![SJ Hotkeys main window in Windows, showing the empty hotkey state](docs/images/main-window.png) | ![SJ Hotkeys About and Settings window on Windows with the SJ Studios logo](docs/images/settings.png) |
+| ![SJ Hotkeys main window in Windows, showing the empty hotkey state](docs/images/main-window-clean.png) | ![SJ Hotkeys About and Settings window on Windows with the SJ Studios logo](docs/images/settings-clean.png) |
 
 ## Download and install
 
