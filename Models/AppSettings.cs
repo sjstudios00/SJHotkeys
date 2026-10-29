@@ -6,4 +6,5 @@ public sealed class AppSettings
     public bool StartWithWindows { get; set; }
     public bool MinimizeToTray { get; set; } = true;
     public bool LaunchMinimized { get; set; }
+    public DateTimeOffset? LastUpdateCheckUtc { get; set; }
 }

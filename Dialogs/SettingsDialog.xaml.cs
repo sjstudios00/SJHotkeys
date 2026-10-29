@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Windows;
+using System.Reflection;
+using MessageBox = System.Windows.MessageBox;
 using SJHotkeys.Models;
 using SJHotkeys.Services;
 
@@ -11,6 +13,7 @@ public partial class SettingsDialog : Window
     private readonly AppSettings _settings;
     private readonly Action _save;
     private readonly StartupService _startup = new();
+    private readonly UpdateService _updates = new();
     private bool _initializing = true;
     public SettingsDialog(AppSettings settings, Action save)
     {
@@ -54,5 +57,40 @@ public partial class SettingsDialog : Window
             Process.Start(startInfo);
         }
         catch (Exception ex) { ErrorText.Text = $"Could not open the source page: {ex.Message}"; ErrorText.Visibility = Visibility.Visible; }
+    }
+
+    private async void CheckForUpdates_Click(object sender, RoutedEventArgs e)
+    {
+        var button = (System.Windows.Controls.Button)sender;
+        button.IsEnabled = false;
+        ErrorText.Visibility = Visibility.Collapsed;
+        UpdateStatusText.Text = "Checking for updates…";
+        UpdateStatusText.Visibility = Visibility.Visible;
+        try
+        {
+            var update = await _updates.CheckAsync();
+            if (update is null)
+            {
+                var current = Assembly.GetEntryAssembly()?.GetName().Version;
+                UpdateStatusText.Text = $"You're up to date ({current?.Major}.{current?.Minor}.{current?.Build}).";
+                return;
+            }
+            var result = MessageBox.Show(this, $"SJ Hotkeys {update.Value.Tag} is available. Download and install it now?\n\nThe update will be verified before installation.", "Update available", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            if (result != MessageBoxResult.Yes)
+            {
+                UpdateStatusText.Text = $"Version {update.Value.Tag} is available.";
+                return;
+            }
+            UpdateStatusText.Text = "Downloading and verifying update…";
+            var downloaded = await _updates.DownloadAndVerifyAsync(update.Value.AssetUrl, update.Value.AssetName);
+            UpdateService.StartInstaller(downloaded);
+        }
+        catch (Exception ex)
+        {
+            ErrorText.Text = $"Update check failed: {ex.Message}";
+            ErrorText.Visibility = Visibility.Visible;
+            UpdateStatusText.Visibility = Visibility.Collapsed;
+        }
+        finally { button.IsEnabled = true; }
     }
 }

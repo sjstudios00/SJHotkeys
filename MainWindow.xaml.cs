@@ -18,7 +18,12 @@ public partial class MainWindow : Window
     private readonly AppSettings _settings;
     private readonly HotkeyService _hotkeys;
     private readonly NotifyIcon? _tray;
+    private readonly UpdateService _updates = new();
+    private readonly CancellationTokenSource _lifetime = new();
+    private (Version Version, string Tag, string AssetUrl, string AssetName)? _availableUpdate;
     private bool _exiting;
+    private bool _resourcesDisposed;
+    public bool IsClosing { get; private set; }
     private bool _trayVisible;
     public bool LaunchMinimized { get; }
 
@@ -50,6 +55,7 @@ public partial class MainWindow : Window
         RegisterSavedHotkeys();
         StateChanged += MainWindow_StateChanged;
         Closing += MainWindow_Closing;
+        Loaded += (_, _) => _ = CheckForUpdatesInBackgroundAsync();
     }
 
     private NotifyIcon? CreateTrayIcon()
@@ -63,6 +69,7 @@ public partial class MainWindow : Window
             menu.Items.Add("Exit", null, (_, _) => ExitApplication());
             var icon = new NotifyIcon { Text = "SJ Hotkeys", Icon = trayIcon, Visible = true, ContextMenuStrip = menu };
             icon.DoubleClick += (_, _) => ShowFromTray();
+            icon.BalloonTipClicked += (_, _) => Dispatcher.BeginInvoke(() => OfferAvailableUpdate());
             icon.Disposed += (_, _) => { trayIcon.Dispose(); menu.Dispose(); };
             return icon;
         }
@@ -162,6 +169,47 @@ public partial class MainWindow : Window
         settings.ShowDialog();
     }
 
+    private async Task CheckForUpdatesInBackgroundAsync()
+    {
+        if (_settings.LastUpdateCheckUtc is { } lastCheck && DateTimeOffset.UtcNow - lastCheck < TimeSpan.FromHours(24)) return;
+        _settings.LastUpdateCheckUtc = DateTimeOffset.UtcNow;
+        try { SaveSettings(); } catch (Exception ex) { StartupLogger.Write("Could not save update check time", ex); }
+        try
+        {
+            await Task.Delay(TimeSpan.FromSeconds(5), _lifetime.Token);
+            var update = await _updates.CheckAsync(_lifetime.Token);
+            if (update is null) return;
+            _availableUpdate = update;
+            await Dispatcher.InvokeAsync(() =>
+            {
+                if (IsVisible) OfferAvailableUpdate();
+                else _tray?.ShowBalloonTip(5000, "SJ Hotkeys update available", $"Version {update.Value.Tag} is ready. Click to review and install.", ToolTipIcon.Info);
+            });
+        }
+        catch (OperationCanceledException) when (_lifetime.IsCancellationRequested) { }
+        catch (Exception ex)
+        {
+            StartupLogger.Write("Background update check failed", ex);
+        }
+    }
+
+    private async void OfferAvailableUpdate()
+    {
+        if (_availableUpdate is not { } update) return;
+        var result = MessageBox.Show(this, $"SJ Hotkeys {update.Tag} is available. Download and install it now?\n\nThe update will be verified before installation.", "Update available", MessageBoxButton.YesNo, MessageBoxImage.Information);
+        if (result != MessageBoxResult.Yes) return;
+        try
+        {
+            var downloaded = await _updates.DownloadAndVerifyAsync(update.AssetUrl, update.AssetName);
+            UpdateService.StartInstaller(downloaded);
+        }
+        catch (Exception ex)
+        {
+            StartupLogger.Write("Update download or installation preparation failed", ex);
+            MessageBox.Show(this, $"The update could not be prepared.\n\n{ex.Message}", "SJ Hotkeys update", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
     private void RefreshState()
     {
         EmptyState.Visibility = _settings.Hotkeys.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
@@ -187,15 +235,16 @@ public partial class MainWindow : Window
     }
     private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
     {
+        IsClosing = true;
         if (!_exiting && _settings.MinimizeToTray && _tray is not null)
         {
             e.Cancel = true;
+            IsClosing = false;
             HideToTray();
         }
         else if (!_exiting)
         {
-            e.Cancel = true;
-            ExitApplication();
+            PrepareForShutdown();
         }
     }
     private void HideToTray()
@@ -223,7 +272,16 @@ public partial class MainWindow : Window
     }
     private void ExitApplication()
     {
+        PrepareForShutdown();
+        Application.Current.Shutdown();
+    }
+
+    public void PrepareForShutdown()
+    {
+        if (_resourcesDisposed) return;
+        _resourcesDisposed = true;
         _exiting = true;
+        _lifetime.Cancel();
         if (_tray is not null)
         {
             _tray.Visible = false;
@@ -232,7 +290,6 @@ public partial class MainWindow : Window
         _hotkeys.Dispose();
         try { SaveSettings(); }
         catch (Exception ex) { StartupLogger.Write("Could not save settings during shutdown", ex); }
-        Close();
-        Application.Current.Shutdown();
+        _lifetime.Dispose();
     }
 }

@@ -23,9 +23,9 @@
 
 SJ Hotkeys makes it easy to open the programs you use most. Choose an executable, record a key combination, and launch that program from anywhere in Windows—even while another app is in front.
 
-![SJ Hotkeys main window showing a compact list of programs, keyboard shortcuts, and edit controls](docs/images/main-window.png)
+![Real screenshot of SJ Hotkeys running on Windows, showing the compact shortcut list, settings button and inline edit/delete actions](docs/images/main-window.png)
 
-*Main window concept showing the compact shortcut list. Paths are shortened to keep the layout tidy; hovering a real entry reveals its full path.*
+*Screenshot captured from the running Windows application. Full paths stay saved locally and are available as a tooltip on each shortcut card.*
 
 ### Why SJ Hotkeys?
 
@@ -35,17 +35,9 @@ SJ Hotkeys makes it easy to open the programs you use most. Choose an executable
 - **Local by design:** shortcuts and preferences are stored on your PC. SJ Hotkeys has no account, analytics, or telemetry.
 - **A focused interface:** a compact dark UI, clear shortcut badges, and neatly trimmed program paths.
 
-## Screenshots
+## Windows screenshots
 
-### Shortcut list
-
-![SJ Hotkeys shortcut list with a highlighted Add Hotkey button and program cards](docs/images/main-window.png)
-
-### About and preferences
-
-![SJ Hotkeys About and Settings view with SJ Studios branding and startup preferences](docs/images/settings.png)
-
-The images above are **Windows-style README illustrations** of the application layout, not captures from a running app session.
+The main-window image above is a direct capture of the running Windows build. The About and Settings panel uses the official SJ Studios logo and native Windows controls.
 
 ## Download and install
 
@@ -111,6 +103,8 @@ Open the **settings button** in the upper-right corner to find:
 
 Shortcut definitions and preferences are saved locally under your Windows user profile. Global shortcuts are released when SJ Hotkeys exits.
 
+SJ Hotkeys checks the official GitHub Releases endpoint at most once every 24 hours in the background. When a newer release is available, it offers to download and install the matching build. Downloads are verified against the SHA-256 release manifest before the app is replaced and restarted.
+
 ## Privacy
 
 SJ Hotkeys is designed to run locally:
@@ -118,7 +112,8 @@ SJ Hotkeys is designed to run locally:
 - No user account or sign-in.
 - No analytics or telemetry.
 - Program paths, shortcuts, and preferences stay in the local settings file.
-- The only network action is opening the repository when **View Source Code** is selected.
+- The app checks the public GitHub Releases feed for updates; update binaries are downloaded only after confirmation.
+- No shortcut or preference data is sent to GitHub.
 
 ## Technology
 
