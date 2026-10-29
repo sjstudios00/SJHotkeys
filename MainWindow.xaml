@@ -21,9 +21,9 @@
   </Window.Resources>
   <Border BorderBrush="#2B2E35" BorderThickness="1" CornerRadius="9" Background="{StaticResource Bg}" ClipToBounds="True">
    <Grid>
-    <Grid.RowDefinitions><RowDefinition Height="40"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+    <Grid.RowDefinitions><RowDefinition Height="46"/><RowDefinition Height="*"/></Grid.RowDefinitions>
     <Grid x:Name="TitleBar" Grid.Row="0" Background="{StaticResource Bg}" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
-      <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0" IsHitTestVisible="False"><Image Source="pack://application:,,,/Assets/sj-hotkeys-icon.png" Width="18" Height="18" Stretch="Uniform"/><TextBlock Text="SJ Hotkeys" FontSize="12" Foreground="{StaticResource Muted}" Margin="8,0,0,0" VerticalAlignment="Center"/></StackPanel>
+      <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0,0,0" IsHitTestVisible="False"><Image Source="pack://application:,,,/Assets/sj-hotkeys-icon.png" Width="22" Height="22" Stretch="Uniform"/><TextBlock Text="SJ Hotkeys" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource Text}" Margin="9,0,0,0" VerticalAlignment="Center"/></StackPanel>
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0">
         <Button Style="{StaticResource TitleBarButton}" Click="Settings_Click" ToolTip="About &amp; settings" AutomationProperties.Name="About and settings"><Path Data="{StaticResource IconSettings}" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Width="19" Height="19" Stretch="Uniform"/></Button>
         <Button Style="{StaticResource TitleBarButton}" Click="Minimize_Click" ToolTip="Minimize" AutomationProperties.Name="Minimize"><Path Data="{StaticResource IconWindowMinimize}" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="1.4" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Width="12" Height="12" Stretch="Uniform"/></Button>
