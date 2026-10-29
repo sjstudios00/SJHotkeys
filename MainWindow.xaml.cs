@@ -210,8 +210,48 @@ public partial class MainWindow : Window
 
     private void Settings_Click(object sender, RoutedEventArgs e)
     {
-        var settings = new SettingsDialog(_settings, SaveSettings) { Owner = this };
+        var settings = new SettingsDialog(_settings, SaveSettings, () => _settings.Hotkeys, ReplaceHotkeysFromProfile) { Owner = this };
         settings.ShowDialog();
+    }
+
+    private string? ReplaceHotkeysFromProfile(List<HotkeyEntry> imported)
+    {
+        var previous = _settings.Hotkeys;
+        _hotkeys.UnregisterAll();
+
+        foreach (var entry in imported)
+        {
+            if (!File.Exists(entry.ProgramPath)) continue;
+            if (_hotkeys.Register(entry, out var error)) continue;
+
+            _hotkeys.UnregisterAll();
+            RestoreHotkeys(previous);
+            return $"The profile could not be activated. {entry.ShortcutText}: {error} Your current hotkeys were kept.";
+        }
+
+        _settings.Hotkeys = imported;
+        try
+        {
+            SaveSettings();
+        }
+        catch (Exception ex)
+        {
+            _settings.Hotkeys = previous;
+            _hotkeys.UnregisterAll();
+            RestoreHotkeys(previous);
+            return $"The profile could not be saved: {ex.Message} Your current hotkeys were kept.";
+        }
+
+        HotkeyList.ItemsSource = null;
+        HotkeyList.ItemsSource = _settings.Hotkeys;
+        RefreshState();
+        return null;
+    }
+
+    private void RestoreHotkeys(IEnumerable<HotkeyEntry> entries)
+    {
+        foreach (var entry in entries)
+            if (File.Exists(entry.ProgramPath)) _hotkeys.Register(entry, out _);
     }
 
     private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -109,6 +109,10 @@ Tastenkombinationen und Einstellungen werden lokal in deinem Windows-Benutzerpro
 
 SJ Hotkeys prüft im Hintergrund höchstens einmal alle 24 Stunden, ob es eine neuere Version in den offiziellen GitHub-Releases gibt. Wenn ein Update verfügbar ist, kannst du den passenden Download und die Installation starten. Vor dem Ersetzen und Neustarten der App wird der Download anhand der SHA-256-Prüfsummendatei überprüft.
 
+### Hotkey-Profil sichern und übertragen
+
+Unter **About & Settings → HOTKEY PROFILE** kannst du alle Programme und Tastenkombinationen als `.sjhotkeys`-Profil exportieren und später wieder importieren. Beim Import werden die aktuell gespeicherten Hotkeys nach deiner Bestätigung ersetzt. Profile enthalten Programmpfade; auf einem anderen PC müssen diese Programme daher am entsprechenden Pfad vorhanden sein, damit ihre Hotkeys gestartet werden können.
+
 ## Datenschutz
 
 SJ Hotkeys ist auf lokale Nutzung ausgelegt:
