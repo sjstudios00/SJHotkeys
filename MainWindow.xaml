@@ -1,0 +1,29 @@
+<Window x:Class="SJHotkeys.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SJ Hotkeys" Icon="/SJHotkeys;component/Assets/sj-studios-logo-cropped.png" Width="560" Height="700" MinWidth="430" MinHeight="500" WindowStartupLocation="CenterScreen" Background="{StaticResource Bg}" Foreground="{StaticResource Text}" FontFamily="Segoe UI Variable Text, Segoe UI" FontSize="13" ResizeMode="CanResizeWithGrip" UseLayoutRounding="True" SnapsToDevicePixels="True">
+  <Window.Resources>
+    <DataTemplate x:Key="HotkeyTemplate">
+      <Border Background="{StaticResource Panel}" CornerRadius="13" Padding="16" Margin="0,0,2,0">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <Grid Grid.Column="0" MinWidth="0" Margin="0,0,12,0">
+            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+            <TextBlock Text="{Binding DisplayName}" Foreground="{StaticResource Text}" FontSize="14" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" ToolTip="{Binding ProgramPath}"/>
+            <TextBlock Grid.Row="1" Text="{Binding ProgramPath}" ToolTip="{Binding ProgramPath}" Foreground="{StaticResource Muted}" FontSize="11" Margin="0,4,0,0" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" MinWidth="0"/>
+            <Border Grid.Row="2" Background="#292D33" CornerRadius="7" Padding="9,5" HorizontalAlignment="Left" Margin="0,10,0,0"><TextBlock Text="{Binding ShortcutText}" Foreground="{StaticResource Accent}" FontSize="12" FontWeight="SemiBold"/></Border>
+          </Grid>
+          <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+            <Button Tag="{Binding}" Click="EditHotkey_Click" Margin="0,0,5,0" Padding="9,8" ToolTip="Edit hotkey"><StackPanel Orientation="Horizontal"><Path Data="{StaticResource IconEdit}" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="1.7" Width="15" Height="15" Stretch="Uniform" Margin="0,0,6,0"/><TextBlock Text="Edit"/></StackPanel></Button>
+            <Button Tag="{Binding}" Click="DeleteHotkey_Click" Style="{StaticResource IconButton}" ToolTip="Delete hotkey" AutomationProperties.Name="Delete hotkey"><Path Data="{StaticResource IconTrash}" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="1.7" Width="17" Height="17" Stretch="Uniform"/></Button>
+          </StackPanel>
+        </Grid>
+      </Border>
+    </DataTemplate>
+  </Window.Resources>
+  <Grid Margin="28,24,28,22" ClipToBounds="True">
+    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <Grid MinWidth="0"><StackPanel><TextBlock Text="SJ Hotkeys" FontSize="25" FontWeight="Bold"/><TextBlock Text="Your shortcuts, one tap away." Foreground="{StaticResource Muted}" Margin="0,4,0,0"/></StackPanel><Button x:Name="SettingsButton" Style="{StaticResource IconButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Click="Settings_Click" ToolTip="About &amp; settings" AutomationProperties.Name="About and settings"><Path Data="{StaticResource IconSettings}" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="1.65" Width="21" Height="21" Stretch="Uniform"/></Button></Grid>
+    <Button Grid.Row="1" x:Name="AddButton" Style="{StaticResource AccentButton}" HorizontalAlignment="Left" Margin="0,24,0,18" Click="AddHotkey_Click"><StackPanel Orientation="Horizontal"><Path Data="{StaticResource IconPlus}" Stroke="#171A13" StrokeThickness="2" Width="16" Height="16" Stretch="Uniform" Margin="0,0,8,0"/><TextBlock Text="Add Hotkey"/></StackPanel></Button>
+    <Grid Grid.Row="2" MinWidth="0" ClipToBounds="True"><ListBox x:Name="HotkeyList" ItemTemplate="{StaticResource HotkeyTemplate}"/><StackPanel x:Name="EmptyState" VerticalAlignment="Center" HorizontalAlignment="Center"><Border Width="52" Height="52" CornerRadius="16" Background="{StaticResource Panel}" Margin="0,0,0,14"><Path Data="{StaticResource IconPlus}" Stroke="{StaticResource Accent}" StrokeThickness="1.8" Width="22" Height="22" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/></Border><TextBlock Text="No hotkeys added yet." Foreground="{StaticResource Muted}" FontSize="14"/></StackPanel></Grid>
+    <Grid Grid.Row="3" Margin="0,14,0,0"><TextBlock Text="HOTKEYS" Foreground="{StaticResource Muted}" FontSize="10" FontWeight="Bold" VerticalAlignment="Center"/><TextBlock x:Name="StatusText" Text="Running in background" Foreground="{StaticResource Muted}" FontSize="11" HorizontalAlignment="Right" VerticalAlignment="Center"/></Grid>
+  </Grid>
+</Window>

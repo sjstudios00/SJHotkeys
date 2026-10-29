@@ -1,0 +1,20 @@
+# Build output
+**/bin/
+**/obj/
+publish/
+release/publish/
+
+# IDE and user-specific files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Local app settings / logs
+settings.json
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store

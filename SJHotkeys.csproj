@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\sj-hotkeys.ico</ApplicationIcon>
+    <AssemblyName>SJ Hotkeys</AssemblyName>
+    <RootNamespace>SJHotkeys</RootNamespace>
+    <Version>1.0.0</Version>
+    <Authors>SJ Studios</Authors>
+    <Company>SJ Studios</Company>
+    <Product>SJ Hotkeys</Product>
+    <Description>Launch programs with custom global keyboard shortcuts.</Description>
+    <Copyright>Copyright © SJ Studios</Copyright>
+    <AssemblyTitle>SJ Hotkeys</AssemblyTitle>
+    <AssemblyDescription>Launch programs with custom global keyboard shortcuts.</AssemblyDescription>
+    <FileDescription>SJ Hotkeys</FileDescription>
+    <LegalCopyright>Copyright © SJ Studios</LegalCopyright>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>false</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+  <ItemGroup>
+    <Resource Include="Assets\sj-studios-logo-cropped.png" />
+  </ItemGroup>
+</Project>
