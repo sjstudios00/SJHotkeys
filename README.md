@@ -1,65 +1,65 @@
 <div align="center">
-  <img src="Assets/sj-studios-logo-cropped.png" alt="SJ Studios logo" width="128" />
+  <img src="Assets/sj-studios-logo-cropped.png" alt="SJ Studios Logo" width="128" />
 
   # SJ Hotkeys
 
-  **Launch your favorite Windows apps with a shortcut.**
+  **Starte deine Windows-Programme mit einer Tastenkombination.**
 
-  A lightweight, dark-mode desktop app for creating and managing global keyboard shortcuts on Windows 10 and Windows 11.
+  Eine schlanke Desktop-App im dunklen Design, mit der du globale Tastenkombinationen unter Windows 10 und Windows 11 erstellst und verwaltest.
 
-  [Download for Windows](https://github.com/sjstudios00/SJHotkeys/releases) · [Report a bug](https://github.com/sjstudios00/SJHotkeys/issues) · [View source](https://github.com/sjstudios00/SJHotkeys)
+  [Windows-Version herunterladen](https://github.com/sjstudios00/SJHotkeys/releases) · [Fehler melden](https://github.com/sjstudios00/SJHotkeys/issues) · [Quellcode ansehen](https://github.com/sjstudios00/SJHotkeys)
 
   <br />
 
   ![Windows 10/11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?logo=windows&logoColor=white)
   ![.NET 9](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet&logoColor=white)
   ![WPF](https://img.shields.io/badge/UI-WPF-5C2D91)
-  ![License](https://img.shields.io/badge/license-MIT-84CC16)
+  ![Lizenz](https://img.shields.io/badge/Lizenz-MIT-84CC16)
 </div>
 
 ---
 
-## At a glance
+## Kurz vorgestellt
 
-SJ Hotkeys makes it easy to open the programs you use most. Choose an executable, record a key combination, and launch that program from anywhere in Windows—even while another app is in front.
+Mit SJ Hotkeys öffnest du deine meistgenutzten Programme im Handumdrehen. Wähle eine ausführbare Datei aus, nimm eine Tastenkombination auf und starte das Programm von überall in Windows – auch wenn ein anderes Fenster im Vordergrund ist.
 
-![Real Windows screenshot of SJ Hotkeys showing its clean empty hotkey list](docs/images/main-window-clean.png)
+![Echter Windows-Screenshot von SJ Hotkeys mit leerer Hotkey-Liste](docs/images/main-window-clean.png)
 
-*A genuine capture of the SJ Hotkeys window, cropped to the app itself. No desktop or other apps are shown.*
+*Eine echte Aufnahme des SJ-Hotkeys-Fensters, auf die App zugeschnitten. Desktop und andere Apps sind nicht zu sehen.*
 
-### Why SJ Hotkeys?
+### Warum SJ Hotkeys?
 
-- **Fast to set up:** browse to an `.exe`, press a shortcut, and save.
-- **Works system-wide:** Windows global hotkeys can launch your programs while SJ Hotkeys is in the background.
-- **Stays out of your way:** keep it in the system tray, start it with Windows, or launch it minimized.
-- **Local by design:** shortcuts and preferences are stored on your PC. SJ Hotkeys has no account, analytics, or telemetry.
-- **A focused interface:** a compact dark UI, clear shortcut badges, and neatly trimmed program paths.
+- **Schnell eingerichtet:** Wähle eine `.exe`-Datei aus, drücke deine Tastenkombination und speichere sie.
+- **Systemweit verfügbar:** Windows-Hotkeys starten Programme auch dann, wenn SJ Hotkeys im Hintergrund läuft.
+- **Hält sich im Hintergrund:** Nutze den Infobereich, den Windows-Autostart oder den minimierten Start.
+- **Lokal und privat:** Tastenkombinationen und Einstellungen bleiben auf deinem PC. SJ Hotkeys benötigt kein Konto und verwendet weder Analyse noch Telemetrie.
+- **Übersichtliche Oberfläche:** Kompaktes dunkles Design, gut erkennbare Tastenkombinationen und gekürzt angezeigte Programmpfade.
 
-## Windows screenshots
+## Screenshots für Windows
 
-Both images below are genuine captures of SJ Hotkeys on Windows, cropped to the application windows so no desktop or other apps appear. The settings view includes the official SJ Studios logo.
+Beide Bilder sind echte Aufnahmen von SJ Hotkeys unter Windows und auf die jeweiligen App-Fenster zugeschnitten. Desktop und andere Apps sind nicht zu sehen. Die Einstellungsansicht zeigt das offizielle SJ Studios Logo.
 
-| Hotkey window | About & Settings |
+| Hotkey-Fenster | Über & Einstellungen |
 | --- | --- |
-| ![SJ Hotkeys main window in Windows, showing the empty hotkey state](docs/images/main-window-clean.png) | ![SJ Hotkeys About and Settings window on Windows with the SJ Studios logo](docs/images/settings-clean.png) |
+| ![SJ-Hotkeys-Hauptfenster unter Windows mit leerer Hotkey-Liste](docs/images/main-window-clean.png) | ![SJ-Hotkeys-Fenster Über und Einstellungen unter Windows mit dem SJ Studios Logo](docs/images/settings-clean.png) |
 
-## Download and install
+## Herunterladen und installieren
 
-### Option 1: Download the Windows build
+### Option 1: Windows-Version herunterladen
 
-1. Open [Releases](https://github.com/sjstudios00/SJHotkeys/releases).
-2. Choose the download that fits your PC:
-   - **Portable:** runs without a separate .NET installation. The first launch can take a little longer while Windows initializes the bundled runtime.
-   - **Lightweight:** a much smaller download; it requires the **.NET 9 Desktop Runtime (x64)**.
-3. Run the executable. No installer or account is required.
+1. Öffne [Releases](https://github.com/sjstudios00/SJHotkeys/releases).
+2. Wähle den passenden Download:
+   - **Portable:** Läuft ohne separat installierte .NET-Runtime. Beim ersten Start kann die Initialisierung der mitgelieferten Runtime etwas länger dauern.
+   - **Lightweight:** Deutlich kleinerer Download; benötigt die **.NET 9 Desktop Runtime (x64)**.
+3. Starte die EXE-Datei. Eine Installation oder ein Benutzerkonto ist nicht erforderlich.
 
-The repository includes the lightweight build at [`release/SJ-Hotkeys-v1.1.0-win-x64-lightweight.exe`](release/SJ-Hotkeys-v1.1.0-win-x64-lightweight.exe). The standalone portable executable is attached to the [v1.1.0 release](https://github.com/sjstudios00/SJHotkeys/releases/tag/v1.1.0).
+Die Lightweight-Version liegt im Repository unter [`release/SJ-Hotkeys-v1.1.0-win-x64-lightweight.exe`](release/SJ-Hotkeys-v1.1.0-win-x64-lightweight.exe). Die eigenständige Portable-Version findest du als Download im [Release v1.1.0](https://github.com/sjstudios00/SJHotkeys/releases/tag/v1.1.0).
 
-> Windows may show a SmartScreen prompt for an unsigned app downloaded from the internet. Only run software you trust and have obtained from the official SJ Hotkeys repository.
+> Windows zeigt bei einer unsignierten App aus dem Internet möglicherweise einen SmartScreen-Hinweis. Führe nur Software aus, der du vertraust und die du aus dem offiziellen SJ-Hotkeys-Repository heruntergeladen hast.
 
-### Option 2: Build from source
+### Option 2: Aus dem Quellcode erstellen
 
-**Requirements:** Windows 10 or Windows 11 and the .NET 9 SDK. The lightweight executable also needs the [.NET 9 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/9.0) (x64). The portable executable bundles the runtime.
+**Voraussetzungen:** Windows 10 oder Windows 11 und das .NET 9 SDK. Für die Lightweight-Version wird zusätzlich die [.NET 9 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/9.0) (x64) benötigt. Die Portable-Version enthält die Runtime.
 
 ```powershell
 git clone https://github.com/sjstudios00/SJHotkeys.git
@@ -67,13 +67,13 @@ cd SJHotkeys
 dotnet run --project .\SJHotkeys.csproj
 ```
 
-To create the lightweight framework-dependent release executable:
+So erstellst du die Lightweight-Release-EXE, die eine installierte Runtime benötigt:
 
 ```powershell
 dotnet publish .\SJHotkeys.csproj -c Release -o .\publish
 ```
 
-The published executable will be `publish/SJ Hotkeys.exe`. This framework-dependent build requires the .NET 9 Desktop Runtime. To publish the self-contained portable variant:
+Die veröffentlichte Datei heißt `publish/SJ Hotkeys.exe` und benötigt die .NET 9 Desktop Runtime. Für die eigenständige Portable-Version verwendest du:
 
 ```powershell
 dotnet publish .\SJHotkeys.csproj -c Release -r win-x64 `
@@ -83,58 +83,58 @@ dotnet publish .\SJHotkeys.csproj -c Release -r win-x64 `
   -o .\publish\portable
 ```
 
-To build the exact v1.1.0 release assets and a SHA-256 checksum manifest, run [`scripts/publish-release.ps1`](scripts/publish-release.ps1).
+Mit dem Skript [`scripts/publish-release.ps1`](scripts/publish-release.ps1) erstellst du die Release-Dateien für v1.1.0 sowie eine SHA-256-Prüfsummendatei.
 
-## Create your first shortcut
+## Deine erste Tastenkombination
 
-1. Open **SJ Hotkeys** and select **Add Hotkey**.
-2. Choose the program's `.exe` file with **Browse**.
-3. Click the shortcut field and press a combination, such as `Ctrl + Alt + N`.
-4. Select **Save Hotkey**.
-5. Press the shortcut from any app to launch the program.
+1. Öffne **SJ Hotkeys** und wähle **Add Hotkey**.
+2. Wähle über **Browse** die `.exe`-Datei des Programms aus.
+3. Klicke auf das Tastenkombinationsfeld und drücke eine Kombination, zum Beispiel `Ctrl + Alt + N`.
+4. Wähle **Save Hotkey**.
+5. Drücke die Kombination in einer beliebigen App, um das Programm zu starten.
 
-Use at least one modifier key: **Ctrl**, **Alt**, **Shift**, or **Win**. A shortcut cannot be assigned twice in SJ Hotkeys. If Windows or another app already owns it, SJ Hotkeys will explain that it is unavailable.
+Verwende mindestens eine Sondertaste: **Ctrl**, **Alt**, **Shift** oder **Win**. Innerhalb von SJ Hotkeys kann dieselbe Kombination nicht doppelt vergeben werden. Falls Windows oder eine andere App sie bereits verwendet, informiert dich SJ Hotkeys darüber.
 
-Use **Edit** to change a program or shortcut, or the trash button to remove an entry. The full executable path is retained in local settings even when its display is shortened in the list.
+Über **Edit** änderst du Programm oder Tastenkombination. Über die Papierkorb-Schaltfläche entfernst du einen Eintrag. Der vollständige Programmpfad bleibt lokal gespeichert, auch wenn er in der Liste gekürzt angezeigt wird.
 
-## Preferences and system tray
+## Einstellungen und Infobereich
 
-Open the **settings button** in the upper-right corner to find:
+Über das **Einstellungssymbol** oben rechts findest du diese Optionen:
 
-- **Start with Windows** — launch SJ Hotkeys when you sign in.
-- **Minimize to Tray** — hide the window in the notification area when minimized or closed. Use the tray menu to reopen or exit the app.
-- **Launch Minimized** — start with the window hidden in the tray.
+- **Start with Windows** – SJ Hotkeys beim Anmelden starten.
+- **Minimize to Tray** – das Fenster beim Minimieren oder Schließen im Infobereich ausblenden. Über das Tray-Menü kannst du die App wieder öffnen oder beenden.
+- **Launch Minimized** – SJ Hotkeys beim Start direkt im Infobereich öffnen.
 
-Shortcut definitions and preferences are saved locally under your Windows user profile. Global shortcuts are released when SJ Hotkeys exits.
+Tastenkombinationen und Einstellungen werden lokal in deinem Windows-Benutzerprofil gespeichert. Beim Beenden gibt SJ Hotkeys alle globalen Tastenkombinationen frei.
 
-SJ Hotkeys checks the official GitHub Releases endpoint at most once every 24 hours in the background. When a newer release is available, it offers to download and install the matching build. Downloads are verified against the SHA-256 release manifest before the app is replaced and restarted.
+SJ Hotkeys prüft im Hintergrund höchstens einmal alle 24 Stunden, ob es eine neuere Version in den offiziellen GitHub-Releases gibt. Wenn ein Update verfügbar ist, kannst du den passenden Download und die Installation starten. Vor dem Ersetzen und Neustarten der App wird der Download anhand der SHA-256-Prüfsummendatei überprüft.
 
-## Privacy
+## Datenschutz
 
-SJ Hotkeys is designed to run locally:
+SJ Hotkeys ist auf lokale Nutzung ausgelegt:
 
-- No user account or sign-in.
-- No analytics or telemetry.
-- Program paths, shortcuts, and preferences stay in the local settings file.
-- The app checks the public GitHub Releases feed for updates; update binaries are downloaded only after confirmation.
-- No shortcut or preference data is sent to GitHub.
+- Kein Benutzerkonto und keine Anmeldung.
+- Keine Analyse und keine Telemetrie.
+- Programmpfade, Tastenkombinationen und Einstellungen bleiben in der lokalen Einstellungsdatei.
+- Für die Updateprüfung ruft die App den öffentlichen GitHub-Releases-Feed ab. Update-Dateien werden erst nach deiner Bestätigung heruntergeladen.
+- Es werden keine Tastenkombinationen oder Einstellungen an GitHub gesendet.
 
-## Technology
+## Technologie
 
-- C# and .NET 9
+- C# und .NET 9
 - Windows Presentation Foundation (WPF)
-- Windows `RegisterHotKey` API for global shortcuts
-- Local JSON configuration in the current Windows user profile
-- Framework-dependent and self-contained `win-x64` single-file publishing
-- Native Windows global hotkeys; no keyboard polling loop
+- Windows-API `RegisterHotKey` für globale Tastenkombinationen
+- Lokale JSON-Konfiguration im Windows-Benutzerprofil
+- Framework-abhängige und eigenständige `win-x64`-Einzeldatei-Veröffentlichungen
+- Native Windows-Hotkeys ohne Tastatur-Abfrageschleife
 
-## Contributing and issues
+## Mitwirken und Fehler melden
 
-Found a problem or have an idea? Please [open an issue](https://github.com/sjstudios00/SJHotkeys/issues) with your Windows version and clear steps to reproduce it. Do not include personal data or private file paths in screenshots or logs.
+Du hast einen Fehler gefunden oder eine Idee? Erstelle bitte ein [Issue](https://github.com/sjstudios00/SJHotkeys/issues) mit deiner Windows-Version und klaren Schritten zur Reproduktion. Füge Screenshots oder Logs keine persönlichen Daten und privaten Dateipfade hinzu.
 
-## License
+## Lizenz
 
-SJ Hotkeys is distributed under the [MIT License](LICENSE).
+SJ Hotkeys wird unter der [MIT-Lizenz](LICENSE) veröffentlicht.
 
 ---
 
