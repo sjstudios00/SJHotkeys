@@ -14,6 +14,7 @@ public sealed class HotkeyService : IDisposable
     private readonly HwndSource _source;
     private readonly Dictionary<int, HotkeyEntry> _entries = [];
     private int _nextId = 0x1000;
+    public int ActiveCount => _entries.Count;
     public event EventHandler<Exception>? LaunchFailed;
     public HotkeyService(Window window)
     {

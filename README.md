@@ -45,23 +45,25 @@ SJ Hotkeys makes it easy to open the programs you use most. Choose an executable
 
 ![SJ Hotkeys About and Settings view with SJ Studios branding and startup preferences](docs/images/settings.png)
 
-The screenshots above are **README illustrations** of the application layout, not captures from a running app session.
+The images above are **Windows-style README illustrations** of the application layout, not captures from a running app session.
 
 ## Download and install
 
 ### Option 1: Download the Windows build
 
 1. Open [Releases](https://github.com/sjstudios00/SJHotkeys/releases).
-2. Download the latest `SJ-Hotkeys-*-win-x64.exe` file.
+2. Choose the download that fits your PC:
+   - **Portable:** runs without a separate .NET installation. The first launch can take a little longer while Windows initializes the bundled runtime.
+   - **Lightweight:** a much smaller download; it requires the **.NET 9 Desktop Runtime (x64)**.
 3. Run the executable. No installer or account is required.
 
-The repository also includes a compact Windows x64 build at [`release/SJ-Hotkeys-1.0.0-win-x64.exe`](release/SJ-Hotkeys-1.0.0-win-x64.exe). This build requires the **.NET 9 Desktop Runtime**. For most users, the standalone download on the [Releases page](https://github.com/sjstudios00/SJHotkeys/releases) is the easiest option.
+The repository includes the lightweight build at [`release/SJ-Hotkeys-v1.1.0-win-x64-lightweight.exe`](release/SJ-Hotkeys-v1.1.0-win-x64-lightweight.exe). The standalone portable executable is attached to the [v1.1.0 release](https://github.com/sjstudios00/SJHotkeys/releases/tag/v1.1.0).
 
 > Windows may show a SmartScreen prompt for an unsigned app downloaded from the internet. Only run software you trust and have obtained from the official SJ Hotkeys repository.
 
 ### Option 2: Build from source
 
-**Requirements:** Windows 10 or Windows 11 and the .NET 9 SDK. To run the compact repository build, install the [.NET 9 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/9.0) if it is not already installed.
+**Requirements:** Windows 10 or Windows 11 and the .NET 9 SDK. The lightweight executable also needs the [.NET 9 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/9.0) (x64). The portable executable bundles the runtime.
 
 ```powershell
 git clone https://github.com/sjstudios00/SJHotkeys.git
@@ -69,13 +71,23 @@ cd SJHotkeys
 dotnet run --project .\SJHotkeys.csproj
 ```
 
-To create a self-contained release executable:
+To create the lightweight framework-dependent release executable:
 
 ```powershell
 dotnet publish .\SJHotkeys.csproj -c Release -o .\publish
 ```
 
-The published executable will be `publish/SJ Hotkeys.exe`. This repository build is framework-dependent and requires the .NET 9 Desktop Runtime; a self-contained build can be created by adding `-p:SelfContained=true` to the publish command.
+The published executable will be `publish/SJ Hotkeys.exe`. This framework-dependent build requires the .NET 9 Desktop Runtime. To publish the self-contained portable variant:
+
+```powershell
+dotnet publish .\SJHotkeys.csproj -c Release -r win-x64 `
+  -p:SelfContained=true `
+  -p:IncludeNativeLibrariesForSelfExtract=true `
+  -p:EnableCompressionInSingleFile=true `
+  -o .\publish\portable
+```
+
+To build the exact v1.1.0 release assets and a SHA-256 checksum manifest, run [`scripts/publish-release.ps1`](scripts/publish-release.ps1).
 
 ## Create your first shortcut
 
@@ -114,7 +126,8 @@ SJ Hotkeys is designed to run locally:
 - Windows Presentation Foundation (WPF)
 - Windows `RegisterHotKey` API for global shortcuts
 - Local JSON configuration in the current Windows user profile
-- Self-contained `win-x64` publish
+- Framework-dependent and self-contained `win-x64` single-file publishing
+- Native Windows global hotkeys; no keyboard polling loop
 
 ## Contributing and issues
 

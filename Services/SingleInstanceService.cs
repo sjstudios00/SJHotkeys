@@ -1,6 +1,9 @@
 using System.IO;
 using System.IO.Pipes;
 using System.Threading;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 
 namespace SJHotkeys.Services;
 
@@ -10,6 +13,7 @@ public sealed class SingleInstanceService : IDisposable
     private const string PipeName = "SJStudios.SJHotkeys.Activate";
     private readonly Mutex _mutex;
     private readonly CancellationTokenSource _stop = new();
+    private int _listenerFailureLogged;
     public bool Acquired { get; }
     public event EventHandler? ActivateRequested;
 
@@ -20,16 +24,26 @@ public sealed class SingleInstanceService : IDisposable
         if (Acquired) _ = ListenAsync(_stop.Token);
     }
 
-    public void SignalExisting()
+    public bool SignalExisting()
     {
-        try
+        for (var attempt = 0; attempt < 5; attempt++)
         {
-            using var client = new NamedPipeClientStream(".", PipeName, PipeDirection.Out);
-            client.Connect(500);
-            using var writer = new StreamWriter(client);
-            writer.WriteLine("activate");
+            try
+            {
+                using var client = new NamedPipeClientStream(".", PipeName, PipeDirection.Out, PipeOptions.None, System.Security.Principal.TokenImpersonationLevel.Identification);
+                client.Connect(300);
+                if (GetNamedPipeServerProcessId(client.SafePipeHandle, out var processId))
+                    AllowSetForegroundWindow(processId);
+                using var writer = new StreamWriter(client) { AutoFlush = true };
+                writer.WriteLine("activate");
+                writer.Flush();
+                return true;
+            }
+            catch (TimeoutException) when (attempt < 4) { Thread.Sleep(100); }
+            catch (IOException) when (attempt < 4) { Thread.Sleep(100); }
+            catch { return false; }
         }
-        catch { }
+        return false;
     }
 
     private async Task ListenAsync(CancellationToken token)
@@ -38,13 +52,20 @@ public sealed class SingleInstanceService : IDisposable
         {
             try
             {
-                await using var server = new NamedPipeServerStream(PipeName, PipeDirection.In, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+                await using var server = new NamedPipeServerStream(PipeName, PipeDirection.In, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous | PipeOptions.CurrentUserOnly);
                 await server.WaitForConnectionAsync(token);
                 using var reader = new StreamReader(server);
-                if (await reader.ReadLineAsync(token) == "activate") ActivateRequested?.Invoke(this, EventArgs.Empty);
+                if (await reader.ReadLineAsync(token) == "activate")
+                    ActivateRequested?.Invoke(this, EventArgs.Empty);
             }
-            catch (OperationCanceledException) { break; }
-            catch { await Task.Delay(250, token).ContinueWith(_ => { }); }
+            catch (OperationCanceledException) when (token.IsCancellationRequested) { break; }
+            catch (Exception ex)
+            {
+                if (Interlocked.Exchange(ref _listenerFailureLogged, 1) == 0)
+                    StartupLogger.Write("Named-pipe activation listener failed", ex);
+                try { await Task.Delay(250, token); }
+                catch (OperationCanceledException) when (token.IsCancellationRequested) { break; }
+            }
         }
     }
 
@@ -55,4 +76,8 @@ public sealed class SingleInstanceService : IDisposable
         _mutex.Dispose();
         _stop.Dispose();
     }
+
+    [DllImport("user32.dll")] private static extern bool AllowSetForegroundWindow(uint processId);
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern bool GetNamedPipeServerProcessId(SafePipeHandle pipe, out uint serverProcessId);
 }

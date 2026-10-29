@@ -8,10 +8,19 @@ public sealed class SettingsStore
 {
     private static readonly JsonSerializerOptions Options = new() { WriteIndented = true };
     public string FilePath { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SJ Studios", "SJ Hotkeys", "settings.json");
-    public AppSettings Load()
+    public AppSettings Load(out bool isFirstRun)
     {
-        try { return File.Exists(FilePath) ? JsonSerializer.Deserialize<AppSettings>(File.ReadAllText(FilePath)) ?? new() : new(); }
-        catch { return new(); }
+        isFirstRun = !File.Exists(FilePath);
+        try
+        {
+            if (!isFirstRun) return JsonSerializer.Deserialize<AppSettings>(File.ReadAllText(FilePath)) ?? new();
+            return new AppSettings { StartWithWindows = true };
+        }
+        catch (Exception ex)
+        {
+            StartupLogger.Write("Could not read local settings", ex);
+            return new();
+        }
     }
     public void Save(AppSettings settings)
     {

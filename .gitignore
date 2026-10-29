@@ -3,6 +3,9 @@
 **/obj/
 publish/
 release/publish/
+artifacts/
+release/*.exe
+!release/SJ-Hotkeys-v1.1.0-win-x64-lightweight.exe
 
 # IDE and user-specific files
 .vs/
