@@ -2,6 +2,7 @@ using System.Drawing;
 using System.Windows;
 using System.IO;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Forms;
 using SJHotkeys.Dialogs;
 using SJHotkeys.Models;
@@ -168,6 +169,15 @@ public partial class MainWindow : Window
         var settings = new SettingsDialog(_settings, SaveSettings) { Owner = this };
         settings.ShowDialog();
     }
+
+    private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (e.ButtonState == MouseButtonState.Pressed) DragMove();
+    }
+
+    private void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+
+    private void Close_Click(object sender, RoutedEventArgs e) => Close();
 
     private async Task CheckForUpdatesInBackgroundAsync()
     {
