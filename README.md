@@ -57,6 +57,16 @@ Die Lightweight-Version liegt im Repository unter [`release/SJ-Hotkeys-v1.1.0-wi
 
 > Windows zeigt bei einer unsignierten App aus dem Internet möglicherweise einen SmartScreen-Hinweis. Führe nur Software aus, der du vertraust und die du aus dem offiziellen SJ-Hotkeys-Repository heruntergeladen hast.
 
+### Installationsprogramm erstellen
+
+Das Inno-Setup-Projekt erstellt ein normales Windows-Installationsprogramm für den aktuellen Benutzer. Es legt SJ Hotkeys im Startmenü ab, bietet optional eine Desktop-Verknüpfung an und enthält die .NET-Runtime. Für die Installation sind keine Administratorrechte nötig. Das Installationsprogramm lässt sich mit dem .NET 9 SDK und [Inno Setup 7](https://jrsoftware.org/isdl.php) erzeugen:
+
+```powershell
+.\scripts\build-installer.ps1
+```
+
+Die Setup-Datei wird unter `artifacts\installer\SJ-Hotkeys-Setup-v1.1.0-win-x64.exe` erstellt. Die App kann über den Windows-Eintrag **SJ Hotkeys** deinstalliert werden; Hotkeys und Einstellungen unter deinem Benutzerprofil bleiben dabei erhalten.
+
 ### Option 2: Aus dem Quellcode erstellen
 
 **Voraussetzungen:** Windows 10 oder Windows 11 und das .NET 9 SDK. Für die Lightweight-Version wird zusätzlich die [.NET 9 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/9.0) (x64) benötigt. Die Portable-Version enthält die Runtime.

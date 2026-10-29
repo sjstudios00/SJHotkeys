@@ -33,10 +33,11 @@ public partial class MainWindow : Window
         InitializeComponent();
         var args = Environment.GetCommandLineArgs();
         _settings = _store.Load(out var isFirstRun);
-        if (isFirstRun)
+        if (isFirstRun || _settings.StartWithWindows)
         {
             try
             {
+                _settings.StartWithWindows = true;
                 _startup.SetEnabled(true);
                 SaveSettings();
             }
